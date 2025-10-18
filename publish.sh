@@ -43,11 +43,16 @@ maybe_create_repo() {
     echo "Repo already exists."
     return 0
   fi
-  echo "Creating repository ${GH_REPO} under the authenticated user..."
-  payload="{\"name\":\"${GH_REPO}\",\"private\":true}"
+  local is_private
+  is_private=true
+  if [ "${GITHUB_REPO_PRIVATE-}" = "false" ]; then
+    is_private=false
+  fi
+  echo "Creating repository ${GH_REPO} under the authenticated user... (private=${is_private})"
+  payload="{\"name\":\"${GH_REPO}\",\"private\":${is_private}}"
   if [ -n "${GITHUB_REPO_DESCRIPTION-}" ]; then
     # Простейшая вставка описания (без экранирования сложных символов)
-    payload="{\"name\":\"${GH_REPO}\",\"private\":true,\"description\":\"${GITHUB_REPO_DESCRIPTION}\"}"
+    payload="{\"name\":\"${GH_REPO}\",\"private\":${is_private},\"description\":\"${GITHUB_REPO_DESCRIPTION}\"}"
   fi
   create_status=$(curl -fsS -o /dev/null -w '%{http_code}' \
     -H "Authorization: token $GITHUB_TOKEN" \

@@ -27,6 +27,7 @@
 - `GITHUB_TOKEN`: персональный токен со scope `repo` для API вызовов.
 - `GIT_SSH_COMMAND`: можно переопределить SSH-опции (по умолчанию `ssh -o StrictHostKeyChecking=accept-new`).
 - `GITHUB_REPO_DESCRIPTION` (опционально): описание репозитория при авто‑создании.
+- `GITHUB_REPO_PRIVATE` (опционально): `false` — создаст публичный репозиторий (по умолчанию приватный).
 
 Поддерживаемые форматы origin
 - `git@github.com:user/repo.git`
